@@ -1,0 +1,32 @@
+= common-tools
+
+后端开发常用工具类，为了减少重复造轮子，提供快速的代码查找功能。
+
+== 概要设计
+
+. 将常见的码存储在GitHub中，每一个文件都带有描述性的信息
+. 通过 polling-daemon 服务将GItHub仓库中Master的代码clone到本地，提取文件的描述信息，并根据不同的文件后缀解析出文件属性，最终生成格式化数据并push到Elasticsearch
+. Elasticsearch持久化代码库的所有信息，供Kibana查询
+
+== 代码文件设计
+
+. 代码文件不可带有业务逻辑，文件须仅属于tools code；除非必须，则使用伪代码
+. 根据代码功能领域划分目录
+. 每个代码目录必须存放 `description.yml`(描述文件)；书写规则见 `./description-rules.adoc`
+
+== polling-daemon设计
+
+维护ES中数据与代码仓库中的保持一致(执行周期 每10分钟1次)，清理ES中冗余数据(默认保留最近7次版本变更)
+
+. 更新本地代码，获取最后一次提交的commit id，对比原有的commit id是否有变化，commit id不一致则进行以下步骤
+. 检查配置ES templates
+. 创建ES索引(索引名规则common-tools.yyyyMMddHHmmdd)
+. 对仓库进行全量解析( `/code-repositories` 目录下所有文件)
+. 组装格式化数据并push到Elasticsearch新建的索引中
+. 设置新建的ES索引只读
+. 检查清理ES中的冗余数据
+
+== 组件说明
+
+- polling-daemon 基于Python 2.7开发，Crontab定期拉起
+- Elasticsearch/Kibana 基于 https://opendistro.github.io/for-elasticsearch-docs/[AWS OpenDistro for Elasticsearch] 带有鉴权，安装ik分词器 https://github.com/medcl/elasticsearch-analysis-ik[elasticsearch-analysis-ik]
