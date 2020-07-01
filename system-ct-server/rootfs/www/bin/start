@@ -1,0 +1,49 @@
+#!/bin/bash
+
+source /www/bin/log_util.sh
+
+init() {
+    if [ -d "/www/server_resources" ]; then
+        echo "init..."
+        tar -zxvf /www/server_resources/opendistroforelasticsearch-1.8.0.tar.gz -C /www/server_resources
+        mv /www/server_resources/opendistroforelasticsearch-1.8.0 /www/elasticsearch
+        /bin/cp -rf /www/server_resources/conf/elasticsearch/* /www/elasticsearch/config/
+
+        cat /etc/passwd | grep 'admin:'
+        if [ $? -eq 1 ]; then
+            echo 'add user...'
+            adduser admin
+        fi
+        chown -R admin /www/elasticsearch
+
+        # 暂时去掉 plugins/*
+        rm -rf /www/elasticsearch/plugins/*
+        # rm -rf /www/server_resources
+    fi
+}
+
+startup() {
+    ps -ef |grep 'org.elasticsearch.bootstrap.Elasticsearch -d' |grep -v grep > /dev/null
+    if [ $? -ne 1 ]; then
+        echo "kill elasticsearch..."
+        ps -ef |grep 'org.elasticsearch.bootstrap.Elasticsearch -d' |grep -v grep |cut -c 9-15 |xargs kill -9
+    fi
+    echo "startup...."
+    su admin -c '/www/elasticsearch/bin/elasticsearch -d'
+}
+
+daemon() {
+    while true; do
+        sleep 30
+        # XXX check es
+        log GREEN "check server success"
+    done
+}
+
+main(){
+    init
+    startup
+    daemon
+}
+
+main

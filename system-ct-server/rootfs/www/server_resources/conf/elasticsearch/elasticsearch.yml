@@ -1,0 +1,10 @@
+cluster.name: elasticsearch-ct
+path.data: /www/elasticsearch/data
+path.logs: /www/elasticsearch/logs
+network.host: 0.0.0.0
+http.port: 9200
+
+node.name: d-node1
+discovery.zen.minimum_master_nodes: 1
+cluster.initial_master_nodes: ["d-node1"]
+# discovery.seed_hosts: ["1.1.1.1:9300", "2.2.2.2:9300", "3.3.3.3:9300"]
