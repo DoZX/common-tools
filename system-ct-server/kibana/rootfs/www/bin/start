@@ -1,0 +1,38 @@
+#!/bin/bash
+
+source /www/bin/log_util.sh
+
+init() {
+    if [ -d "/www/server_resources" ]; then
+        echo "init..."
+        cp -rf /www/server_resources/conf/* /usr/share/kibana/config/
+
+        # rm -rf /www/server_resources
+    fi
+}
+
+startup() {
+    ps -ef |grep '/usr/share/kibana/kibana.log' |grep -v grep > /dev/null
+    if [ $? -ne 1 ]; then
+        echo "kill kibana..."
+        ps -ef |grep '/usr/share/kibana/kibana.log' |grep -v grep |cut -c 9-15 |xargs kill -9
+    fi
+    echo "startup...."
+    /usr/share/kibana/bin/kibana -l /usr/share/kibana/ct-kibana.log &
+}
+
+daemon() {
+    while true; do
+        sleep 30
+        # XXX check kibana
+        # log GREEN "check server success"
+    done
+}
+
+main(){
+    init
+    startup
+    daemon
+}
+
+main
