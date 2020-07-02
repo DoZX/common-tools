@@ -1,4 +1,4 @@
-FROM centos:7
+FROM amazon/opendistro-for-elasticsearch:1.8.0
 LABEL maintainer="dhh"
 
 COPY rootfs /
