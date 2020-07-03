@@ -6,6 +6,7 @@ init() {
     if [ -d "/www/server_resources" ]; then
         echo "init..."
         cp -rf /www/server_resources/conf/* /usr/share/kibana/config/
+        mkdir -p /usr/share/kibana/logs
 
         # rm -rf /www/server_resources
     fi
@@ -18,7 +19,7 @@ startup() {
         ps -ef |grep '/usr/share/kibana/kibana.log' |grep -v grep |cut -c 9-15 |xargs kill -9
     fi
     echo "startup...."
-    /usr/share/kibana/bin/kibana -l /usr/share/kibana/ct-kibana.log &
+    /usr/share/kibana/bin/kibana -l /usr/share/kibana/logs/ct-kibana.log &
 }
 
 daemon() {
