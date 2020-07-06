@@ -5,9 +5,7 @@ classs:
   - name: MD5Util
 attributes:
   - name: hexDigits
-    type: char[]
-    scope: private
-    stackFrame: static final
+    description: 16进制编码
 methods:
   - name: MD5Encode
-    scope: public
+    description: md5加密

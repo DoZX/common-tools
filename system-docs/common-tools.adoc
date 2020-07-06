@@ -11,7 +11,8 @@
 - *Kibana* 提供简易代码库代码的查询操作
 
 === 系统逻辑描述
-. 将工具类上传到代码库，通过准入规范并合入master分支
+. 下载本仓库的application，生成对应的description.yml，并修改完善
+. 将工具类及description.yml上传到代码库，通过准入规范并合入master分支
 . polling-daemon监听到master分支代码有改动后会触发解析逻辑
 . polling-daemo解析逻辑会对代码库master分支代码进行全量解析，组装格式化 `/code-repositories` 内所有的文件，并将数据push到Elasticsearch服务
 . Elasticsearch将polling-daemo push的所有数据落盘，提供分布式全文检索能力
@@ -54,13 +55,13 @@
 . 配置文件落盘且容器重启文件不丢失
 
 ==== 维护Elasticsearch中的数据(maintenance-data)
-. 更新本地代码，获取最后一次提交的commit id，对比原有的commit id是否有变化，commit id不一致则进行以下步骤
+. 更新本地代码，获取最后一次提交的commit id，对比原有的commit id是否有变化，commit id不一致则进行以下步骤(周期执行或者GitHub内置通知)
 . 检查配置ES templates
-. 创建ES索引(索引名规则common-tools.yyyyMMddHHmmdd)
+. 创建ES索引(索引名规则common-tools.yyyyMMddHHmm)
 . 对仓库进行全量解析( `/code-repositories` 目录下所有文件)
 . 组装格式化数据并push到Elasticsearch新建的索引中
 . 设置新建的ES索引只读
-. 清理ES中冗余数据(默认保留最近7次版本变更)
+. 清理ES中冗余数据
 
 === Elasticsearch
 . Elasticsearch 基于Docker镜像 `amazon/opendistro-for-elasticsearch:1.8.0` 构建
