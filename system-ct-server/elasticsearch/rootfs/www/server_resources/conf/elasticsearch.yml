@@ -1,0 +1,30 @@
+cluster.name: ct-elasticsearch
+path.data: /usr/share/elasticsearch/data
+path.logs: /usr/share/elasticsearch/logs
+network.host: 0.0.0.0
+http.port: 9200
+
+node.name: d-node1
+discovery.zen.minimum_master_nodes: 1
+cluster.initial_master_nodes: ["d-node1"]
+# discovery.seed_hosts: ["1.1.1.1:9600", "2.2.2.2:9600", "3.3.3.3:9600"]
+
+opendistro_security.ssl.transport.pemcert_filepath: cert/node.pem
+opendistro_security.ssl.transport.pemkey_filepath: cert/node-key.pem
+opendistro_security.ssl.transport.pemtrustedcas_filepath: cert/root-ca.pem
+opendistro_security.ssl.transport.enforce_hostname_verification: false
+opendistro_security.ssl.http.enabled: false
+opendistro_security.ssl.http.pemcert_filepath: cert/node.pem
+opendistro_security.ssl.http.pemkey_filepath: cert/node-key.pem
+opendistro_security.ssl.http.pemtrustedcas_filepath: cert/root-ca.pem
+opendistro_security.allow_unsafe_democertificates: true
+opendistro_security.allow_default_init_securityindex: true
+opendistro_security.authcz.admin_dn:
+  - "emailAddress=ct-elasticsearch@ct.com,CN=ct-elasticsearch,OU=elasticsearch,O=ct,L=bj,ST=bj,C=cn"
+
+opendistro_security.audit.type: internal_elasticsearch
+opendistro_security.enable_snapshot_restore_privilege: true
+opendistro_security.check_snapshot_restore_write_privileges: true
+opendistro_security.restapi.roles_enabled: ["all_access", "security_rest_api_access"]
+cluster.routing.allocation.disk.threshold_enabled: false
+node.max_local_storage_nodes: 3

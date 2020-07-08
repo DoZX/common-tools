@@ -1,0 +1,72 @@
+= common-tools
+
+后端开发常用工具类，为了减少重复造轮子，提供快速的代码查找功能。
+
+== 概要设计
+
+=== 模块划分
+- https://github.com/DoZX/common-tools[*common-tools*] 源代码存储库
+- *polling-daemon* 包含两个组件，tengine-server：为ct-server提供元数据信息；maintenance-data：维护Elasticsearch中数据与代码仓库中的保持一致，清理ES中冗余数据
+- *Elasticsearch* 持久化代码库中 `/code-repositories` 内所有的信息
+- *Kibana* 提供简易代码库代码的查询操作
+
+=== 系统逻辑描述
+. 下载本仓库的application，生成对应的description.yml，并修改完善
+. 将工具类及description.yml上传到代码库，通过准入规范并合入master分支
+. polling-daemon监听到master分支代码有改动后会触发解析逻辑
+. polling-daemo解析逻辑会对代码库master分支代码进行全量解析，组装格式化 `/code-repositories` 内所有的文件，并将数据push到Elasticsearch服务
+. Elasticsearch将polling-daemo push的所有数据落盘，提供分布式全文检索能力
+. 最后通过Kibana来查询代码库的代码
+
+== 详细设计
+
+=== common-tools 源代码存储库
+
+==== 目录结构说明
+----
+├─ common-tools
+│  ├─ code-repositories     // 工具代码文件，下层结构按语言划分
+│  │  ├─ Java                   // Java 工具代码文件目录，下层目录按代码功能领域划分
+│  │  ├─ JavaScript             // JavaScript ...
+│  │  ├─ Python                 // Python ...
+│  │  └─ Shell                  // Shell ...
+│  ├─ system-ct-server      // 服务源码目录
+│  │  ├─ elasticsearch
+│  │  ├─ kibana
+│  │  └─ polling-daemon         // 服务守护程序
+│  ├─ system-docs
+│  │  ├─ example            // 准入规范示例
+│  │  ├─ common-tools.adoc      // 设计文档
+│  │  └─ description-rules.adoc // 描述文件书写规则
+│  ├─ .gitignore
+│  └─ README.md
+----
+
+=== polling-daemon
+. Linux Crontab 周期拉起start_polling-daemon.sh；拉起周期:1分钟1次
+. 触发tengine-server 解析简要配置，更新配置文件
+. 触发maintenance-data 维护Elasticsearch的数据
+
+==== 提供元数据信息(tengine-server)
+为组件提供配置中心服务，即所有的不确定配置都从这里获取；如Elasticsearch组件中 `elasticsearch.yml` 文件的 `node.name` 可以通过rest api从本服务获取配置内容
+
+. tengine + lua 实现对外提供rest api接口
+. 解析简要配置，生成所需的配置文件
+. 配置文件落盘且容器重启文件不丢失
+
+==== 维护Elasticsearch中的数据(maintenance-data)
+. 更新本地代码，获取最后一次提交的commit id，对比原有的commit id是否有变化，commit id不一致则进行以下步骤(周期执行或者GitHub内置通知)
+. 检查配置ES templates
+. 创建ES索引(索引名规则common-tools.yyyyMMddHHmm)
+. 对仓库进行全量解析( `/code-repositories` 目录下所有文件)
+. 组装格式化数据并push到Elasticsearch新建的索引中
+. 设置新建的ES索引只读
+. 清理ES中冗余数据
+
+=== Elasticsearch
+. Elasticsearch 基于Docker镜像 `amazon/opendistro-for-elasticsearch:1.8.0` 构建
+. 鉴权能力 https://opendistro.github.io/for-elasticsearch-docs/docs/security-configuration/[security-configuration]
+. 中文分词能力 ik分词器 https://github.com/medcl/elasticsearch-analysis-ik[elasticsearch-analysis-ik]
+
+=== Kibana
+. Kibana 基于Docker镜像 `amazon/opendistro-for-elasticsearch-kibana:1.8.0` 构建

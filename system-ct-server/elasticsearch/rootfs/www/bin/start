@@ -1,0 +1,39 @@
+#!/bin/bash
+
+source /www/bin/log_util.sh
+
+init() {
+    if [ -d "/www/server_resources" ]; then
+        echo "init..."
+        cp -rf /www/server_resources/conf/* /usr/share/elasticsearch/config/
+
+        chown -R elasticsearch:elasticsearch /usr/share/elasticsearch
+        # rm -rf /www/server_resources
+    fi
+}
+
+startup() {
+    ps -ef |grep 'org.elasticsearch.bootstrap.Elasticsearch -d' |grep -v grep > /dev/null
+    if [ $? -ne 1 ]; then
+        echo "kill elasticsearch..."
+        ps -ef |grep 'org.elasticsearch.bootstrap.Elasticsearch -d' |grep -v grep |cut -c 9-15 |xargs kill -9
+    fi
+    echo "startup...."
+    su elasticsearch -c '/usr/share/elasticsearch/bin/elasticsearch -d'
+}
+
+daemon() {
+    while true; do
+        sleep 30
+        # XXX check es
+        log GREEN "check server success"
+    done
+}
+
+main(){
+    init
+    startup
+    daemon
+}
+
+main

@@ -1,0 +1,11 @@
+name: md5加密工具类
+description: md5加密工具类
+keyword: md5 加密 java 非对称加密
+classs:
+  - name: MD5Util
+attributes:
+  - name: hexDigits
+    description: 16进制编码
+methods:
+  - name: MD5Encode
+    description: md5加密

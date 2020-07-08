@@ -1,0 +1,29 @@
+#!/bin/bash
+
+source /www/bin/log_util.sh
+
+init() {
+    if [ -d "/www/server_resources" ]; then
+        echo "init..."
+
+        # rm -rf /www/server_resources
+    fi
+}
+
+startup() {
+    echo "startup...."
+}
+
+daemon() {
+    while true; do
+        sleep 30
+    done
+}
+
+main(){
+    init
+    startup
+    daemon
+}
+
+main
