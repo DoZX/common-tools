@@ -1,8 +1,12 @@
 #!/bin/bash
 
 PACKAGE_PATH='/www/tengine-server/zip'
-LUA_INSTALL_PATH='/www/tengine-server/install_resources/lua'
+LUA_INSTALL_PATH='/www/tengine-server/lua_resources'
 TENGINE_INSTALL_PATH='/www/tengine-server/server'
+
+if [ ! -e $LUA_INSTALL_PATH ]; then
+    mkdir -p $LUA_INSTALL_PATH && mkdir -p $TENGINE_INSTALL_PATH
+fi
 
 init_install_packages() {
     cd $PACKAGE_PATH
@@ -55,6 +59,8 @@ make_install_tengine() {
                 --add-module=$PACKAGE_PATH/lua-nginx-module-0.10.2/ \
                 --with-ld-opt=-Wl,-rpath,$LUA_INSTALL_PATH/lib && \
     make && make install
+    mv -f /www/tengine-server/conf/nginx.conf $TENGINE_INSTALL_PATH/conf/nginx.conf && \
+    mv -f /www/tengine-server/conf/conf.d $TENGINE_INSTALL_PATH/conf/
 }
 
 main() {

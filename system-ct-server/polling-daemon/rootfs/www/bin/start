@@ -7,15 +7,16 @@ init() {
         echo "init..."
         cp -rf /www/server_resources/maintenance-data /www/
         cp -rf /www/server_resources/tengine-server /www/
-        cp -rf /www/server_resources/cron /var/spool/cron/
+        cp -rf /www/server_resources/cron /var/spool/
 
-        # rm -rf /www/server_resources
+        /www/bin/install_tengine.sh
+        rm -rf /www/server_resources
     fi
 }
 
 startup() {
     echo "startup tengine...."
-    # XXX
+    /www/tengine-server/server/sbin/nginx
     echo "startup polling-daemon...."
     /www/bin/start_polling-daemon.sh
 }

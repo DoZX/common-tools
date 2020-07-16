@@ -6,7 +6,7 @@ echo $(date) > $cron_log_file
 # 检查是否已加入任务
 if ! grep -Fxq '*/1 * * * * /bin/sh /www/bin/start_polling-daemon.sh' $cron_file; then
     echo '*/1 * * * * /bin/sh /www/bin/start_polling-daemon.sh' >> $cron_file
-    /etc/init.d/crond reload
+    /usr/sbin/crond reload
     echo 'crontab reload' >> $cron_log_file
 fi
 
