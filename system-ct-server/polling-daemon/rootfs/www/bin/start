@@ -9,7 +9,7 @@ init() {
         cp -rf /www/server_resources/tengine-server /www/
         cp -rf /www/server_resources/cron /var/spool/
 
-        /www/bin/install_tengine.sh
+        /www/bin/install.sh
         rm -rf /www/server_resources
     fi
 }

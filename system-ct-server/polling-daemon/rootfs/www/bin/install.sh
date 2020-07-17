@@ -63,11 +63,16 @@ make_install_tengine() {
     mv -f /www/tengine-server/conf/conf.d $TENGINE_INSTALL_PATH/conf/
 }
 
+install_python_packages() {
+    /usr/bin/pip install gitpython
+}
+
 main() {
   init_install_packages
   make_install_lua
   make_install_tengine
-  echo 'The tengine lua install success!'
+  install_python_packages
+  echo 'install success!'
 }
 
 main
