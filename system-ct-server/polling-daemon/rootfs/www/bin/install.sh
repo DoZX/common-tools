@@ -64,7 +64,7 @@ make_install_tengine() {
 }
 
 install_python_packages() {
-    /usr/bin/pip install gitpython
+    /usr/bin/pip install requests
 }
 
 main() {
