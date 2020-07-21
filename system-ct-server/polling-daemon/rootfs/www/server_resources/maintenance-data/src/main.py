@@ -19,6 +19,7 @@ def main():
     git_addr = conf.get(INI_SECTION_GIT, INI_SECTION_GIT_KEY_GIT_ADDR)
     branch = conf.get(INI_SECTION_GIT, INI_SECTION_GIT_KEY_BRANCH)
     resource_path = conf.get(INI_SECTION_GIT, INI_SECTION_GIT_KEY_RESOURCE_PATH)
+    resource_code_repositories_path = resource_path + '/code-repositories'
     rev = conf.get(INI_SECTION_GIT, INI_SECTION_GIT_KEY_REV)
 
     # checkout git code
@@ -39,7 +40,7 @@ def main():
     if not ret: raise Exception("maintenance-data git pull fail")
 
     # parser code
-    rp = ResourceParser(resource_path)
+    rp = ResourceParser(resource_code_repositories_path)
     rp.parser_all_module()
 
 

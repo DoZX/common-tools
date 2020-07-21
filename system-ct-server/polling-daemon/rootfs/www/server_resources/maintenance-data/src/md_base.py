@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import time
 import commands
 import configparser
 from log_util import *
@@ -55,27 +56,39 @@ class IniUtil:
 
 
 class ResourceParser:
-    def __init__(self, resource_path):
+    def __init__(self, resource_path, db_server_host):
         self.resource_path = resource_path
+        self.db_server_host = db_server_host
+        self.db_server_instance = PushDatabase(self.db_server_host)
 
     def parser_description_yml(self, file_path):
-        pass
+        return {}
 
     def read_resource(self, file_path):
-        pass
+        return ''
 
     def parser_single_module(self, resource_path):
         pass
 
     def parser_all_module(self):
-        pass
+        for root, dirs, files in os.walk(self.resource_path):
+            if 'description.yml' in files:
+                description_dict = self.parser_description_yml(root + "/description.yml")
+                description_dict['file_path'] = root
+                for fileName in files:
+                    if fileName == 'description.yml':
+                        continue
+                    description_dict['code_' + fileName] = self.read_resource(root + fileName)
+                self.db_server_instance.push(description_dict)
 
 
-class pushDatabase:
+class PushDatabase:
     def __init__(self, db_server_host):
         self.db_server_host = db_server_host
+        self.init()
 
     def init(self):
+        self.es_index_name = 'ct.' + str(time.strftime("%Y-%m-%d_%H:%M", time.localtime()))
         pass
 
     def push(self, data):
