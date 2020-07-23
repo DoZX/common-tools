@@ -2,7 +2,7 @@ server.name: ct-kibana
 server.host: "0.0.0.0"
 server.port: 5601
 i18n.locale: zh-CN
-elasticsearch.hosts: ["http://172.17.8.148:9200"]
+elasticsearch.hosts: ["http://47.93.98.144:9200"]
 elasticsearch.username: admin
 elasticsearch.password: admin
 

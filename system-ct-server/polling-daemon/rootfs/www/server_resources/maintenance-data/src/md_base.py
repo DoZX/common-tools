@@ -92,6 +92,7 @@ class ResourceParser:
                         continue
                     description_dict['__code_' + fileName] = self.read_resource('%s/%s' %(root, fileName))
                 self.db_server_instance.push(json.dumps(description_dict))
+        loginfo.info("maintenance-data parser all module ok")
 
     def get_file_path(self, root_path):
         return root_path.replace(self.resource_path, 'https://github.com/DoZX/common-tools/blob/master/code-repositories')
