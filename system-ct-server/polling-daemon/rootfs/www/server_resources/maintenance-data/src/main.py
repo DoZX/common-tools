@@ -2,7 +2,6 @@
 
 import os
 import sys
-from log_util import *
 from md_base import *
 
 MAINTENANCE_DATA_CONF_PATH = '../conf/maintenance-data.ini'
@@ -31,21 +30,28 @@ def main():
     if not os.path.exists(resource_path):
         ret, _ = git.clone()
         if not ret: raise Exception("maintenance-data git clone fail")
-
-    # get / update rev
-    ret, commit_id = git.rev()
-    if ret and rev == commit_id:
-        loginfo.info("git resource is latest version")
-        sys.exit(0)
-    conf.save(INI_SECTION_GIT, INI_SECTION_GIT_KEY_REV, commit_id)
+    loginfo.info("git clone success")
 
     # pull latest code
     ret, _ = git.pull()
     if not ret: raise Exception("maintenance-data git pull fail")
+    loginfo.info("git pull success")
+
+    # get rev
+    ret, commit_id = git.rev()
+    if ret and rev == commit_id:
+        loginfo.info("git resource is latest version")
+        sys.exit(0)
+    loginfo.info("git resource need parser code")
 
     # parser code
     rp = ResourceParser(resource_code_repositories_path, db_server_host, 'admin', 'admin')
     rp.parser_all_module()
+    loginfo.info("parser code success")
+
+    # update rev
+    conf.save(INI_SECTION_GIT, INI_SECTION_GIT_KEY_REV, commit_id)
+    loginfo.info("update rev success")
 
 
 if __name__ == '__main__':

@@ -92,7 +92,7 @@ class ResourceParser:
                         continue
                     description_dict['__code_' + fileName] = self.read_resource('%s/%s' %(root, fileName))
                 self.db_server_instance.push(json.dumps(description_dict))
-        loginfo.info("maintenance-data parser all module ok")
+        loginfo.info("maintenance-data parser all module success")
 
     def get_file_path(self, root_path):
         return root_path.replace(self.resource_path, 'https://github.com/DoZX/common-tools/blob/master/code-repositories')
@@ -119,7 +119,7 @@ class PushDatabase:
             request_body = '{\"settings\": {\"number_of_shards\": 6, \"number_of_replicas\": 0}}'
             response_data = requests.put(url, data=request_body, headers=request_headers, timeout=30, auth=(self.user_name, self.password))
             if response_data.status_code != 200: raise Exception("init elasticsearch add index:%s fail, code:%s exception:%s" % (self.es_index_name, response_data.status_codem, str(response_data.content)))
-            loginfo.info("init elasticsearch add index:%s ok" % (self.es_index_name))
+            loginfo.info("init elasticsearch add index:%s success" % (self.es_index_name))
         else:
             loginfo.info("init elasticsearch have %s" %(self.es_index_name))
 
@@ -131,7 +131,7 @@ class PushDatabase:
             request_body = "{\"template\":\"ct.*\",\"order\":9,\"settings\":{\"number_of_shards\":6,\"number_of_replicas\":0,\"analysis\":{\"analyzer\":{\"comma\":{\"type\":\"simple\",\"pattern\":[\",\",\" \",\"'\",\"\\\"\",\";\",\"=\",\"(\",\")\",\"[\",\"]\",\"{\",\"}\",\"?\",\"@\",\"&\",\"<\",\">\",\"/\",\":\",\"\\n\",\"\\t\",\"\\r\"],\"lowercase\":false}}}},\"mappings\":{\"properties\":{\"__file_path__\":{\"type\":\"keyword\"},\"__code_type__\":{\"type\":\"keyword\"},\"name\":{\"type\":\"keyword\"},\"description\":{\"type\":\"keyword\"},\"keyword\":{\"type\":\"keyword\"}}}}"
             response_data = requests.put(url, data=request_body, headers=request_headers, timeout=30, auth=(self.user_name, self.password))
             if response_data.status_code != 200: raise Exception("init elasticsearch add ct_template fail, code:%s exception:%s" % (response_data.status_code, str(response_data.content)))
-            loginfo.info("init elasticsearch add ct_template ok")
+            loginfo.info("init elasticsearch add ct_template success")
         else:
             loginfo.info("init elasticsearch have ct_template")
 
