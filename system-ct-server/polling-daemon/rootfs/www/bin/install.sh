@@ -64,7 +64,7 @@ make_install_tengine() {
 }
 
 install_python_packages() {
-    /usr/bin/pip install requests configparser pyyaml
+    /usr/bin/pip install --upgrade pip && /usr/bin/pip install requests configparser pyyaml
 }
 
 main() {

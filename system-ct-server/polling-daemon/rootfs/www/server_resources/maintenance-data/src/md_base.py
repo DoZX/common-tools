@@ -68,14 +68,14 @@ class ResourceParser:
         self.db_server_instance = PushDatabase(self.db_server_host, db_user_name, db_password)
 
     def parser_description_yml(self, file_path):
-        with open(file_path) as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             if hasattr(yaml, 'FullLoader'):
                 return yaml.load(f, Loader=yaml.FullLoader)
             else:
                 return yaml.load(f)
 
     def read_resource(self, file_path):
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             return f.read()
 
     def parser_single_module(self, resource_path):
@@ -130,11 +130,10 @@ class PushDatabase:
         else:
             loginfo.info("init elasticsearch have ct_template")
 
-    def push(self, data_json_str):
-        url = 'http://%s/%s' %(self.db_server_host, self.es_index_name)
+    def push(self, request_body_json_str):
+        url = 'http://%s/%s/_doc' %(self.db_server_host, self.es_index_name)
         request_headers = {'Content-Type': 'application/json'}
-        request_body = data_json_str
-        response_data = requests.put(url, data=request_body, headers=request_headers, timeout=120, auth=(self.user_name, self.password))
+        response_data = requests.put(url, data=request_body_json_str, headers=request_headers, timeout=120, auth=(self.user_name, self.password))
         if response_data.status_code != 200: raise Exception("push data to elasticsearch fail, exception:%s" % (str(response_data.content)))
 
 
