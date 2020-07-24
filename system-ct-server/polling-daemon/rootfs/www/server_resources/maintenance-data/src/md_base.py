@@ -4,6 +4,7 @@
 import os
 import time
 import commands
+import traceback
 import configparser
 import yaml
 import json
@@ -99,8 +100,8 @@ class ResourceParser:
 
     def get_code_type(self, root_path):
         path_list = root_path.split('/')
-        if len(path_list) >= 3:
-            return path_list[2]
+        if len(path_list) >= 5:
+            return path_list[4]
 
 
 class PushDatabase:

@@ -59,5 +59,6 @@ if __name__ == '__main__':
         loginfo.info("start maintenance-data....")
         main()
     except Exception as e:
-        logerror.info("maintenance-data do fail, exception:%s" % str(e))
-        raise Exception("maintenance-data do fail, exception:%s" % str(e))
+        msg = traceback.format_exc()
+        logerror.info("maintenance-data do fail, exception:%s" % str(msg))
+        raise Exception("maintenance-data do fail, exception:%s" % str(msg))
