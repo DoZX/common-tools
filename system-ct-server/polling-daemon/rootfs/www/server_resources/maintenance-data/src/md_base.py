@@ -13,8 +13,9 @@ from log_util import *
 
 logUtil = LogUtil()
 loginfo, logerror = logUtil.pub_logger()
-RET_OK=True
-RET_ERR=False
+RET_OK = True
+RET_ERR = False
+DESCRIPTION_FILE_NAME = 'description.yml'
 
 def doBash(cmd):
     ret = RET_OK
@@ -83,26 +84,43 @@ class ResourceParser:
         pass
 
     def parser_all_module(self):
-        for root, dirs, files in os.walk(self.resource_path):
-            if 'description.yml' in files:
-                description_dict = self.parser_description_yml(root + "/description.yml")
-                description_dict['__file_path__'] = self.get_file_path(root)
-                description_dict['__code_type__'] = self.get_code_type(root)
-                for fileName in files:
-                    if fileName == 'description.yml':
-                        continue
-                    description_dict['__code_' + fileName] = self.read_resource('%s/%s' %(root, fileName))
-                self.db_server_instance.push(json.dumps(description_dict))
+        for type_file in os.listdir(self.resource_path):
+            ct_code_type = type_file
+            for module_file in os.listdir(os.path.join(self.resource_path, type_file)):
+                module_file_path = os.path.join(self.resource_path, type_file, module_file)
+                module_files = os.listdir(module_file_path)
+                if DESCRIPTION_FILE_NAME in module_files:
+                    description_file_path = os.path.join(module_file_path, DESCRIPTION_FILE_NAME)
+                    description_dict = self.parser_description_yml(description_file_path)
+                    description_dict['ct__file_path__'] = self.get_git_url(module_file_path)
+                    description_dict['ct__code_type__'] = ct_code_type
+                    description_dict['ct__date__'] = self.get_last_update_time(description_file_path)
+                    for code_file_l1 in module_files:
+                        code_file_path_l1 = os.path.join(module_file_path, code_file_l1)
+                        code_file_list = []
+                        if os.path.isdir(code_file_path_l1):
+                            self.get_file_path_list(code_file_path_l1, code_file_list)
+                        if len(code_file_list) > 0:
+                            for code_file_path_ln in code_file_list:
+                                description_dict['ct__code_' + code_file_path_ln.replace(code_file_l1, '')] = self.read_resource(code_file_path_l1)
+                        else:
+                            description_dict['ct__code_' + code_file_l1] = self.read_resource(code_file_path_l1)
+                    self.db_server_instance.push(json.dumps(description_dict))
+                else:
+                    loginfo.info("maintenance-data parser path %s %s does not exist" %(module_file_path, DESCRIPTION_FILE_NAME))
         loginfo.info("maintenance-data parser all module success")
 
-    def get_file_path(self, root_path):
+    def get_git_url(self, root_path):
         return root_path.replace(self.resource_path, 'https://github.com/DoZX/common-tools/blob/master/code-repositories')
 
-    def get_code_type(self, root_path):
-        path_list = root_path.split('/')
-        if len(path_list) >= 5:
-            return path_list[4]
+    def get_last_update_time(self, file_path):
+        return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(os.stat(file_path).st_mtime))
 
+    def get_file_path_list(self, path, file_path_list):  #传入存储的list
+        for file in os.listdir(path):
+            file_path = os.path.join(path, file)
+            if os.path.isdir(file_path): self.get_file_path_list(file_path, file_path_list)
+            file_path_list.append(file_path)
 
 class PushDatabase:
     def __init__(self, db_server_host, user_name, password):
@@ -129,7 +147,7 @@ class PushDatabase:
         if response_data.status_code != 200:
             loginfo.info("init elasticsearch need add ct_template")
             request_headers = {'Content-Type': 'application/json'}
-            request_body = "{\"template\":\"ct.*\",\"order\":9,\"settings\":{\"number_of_shards\":6,\"number_of_replicas\":0,\"analysis\":{\"analyzer\":{\"comma\":{\"type\":\"simple\",\"pattern\":[\",\",\" \",\"'\",\"\\\"\",\";\",\"=\",\"(\",\")\",\"[\",\"]\",\"{\",\"}\",\"?\",\"@\",\"&\",\"<\",\">\",\"/\",\":\",\"\\n\",\"\\t\",\"\\r\"],\"lowercase\":false}}}},\"mappings\":{\"properties\":{\"__file_path__\":{\"type\":\"keyword\"},\"__code_type__\":{\"type\":\"keyword\"},\"name\":{\"type\":\"keyword\"},\"description\":{\"type\":\"keyword\"},\"keyword\":{\"type\":\"keyword\"}}}}"
+            request_body = "{\"template\":\"ct.*\",\"order\":9,\"settings\":{\"number_of_shards\":6,\"number_of_replicas\":0,\"analysis\":{\"analyzer\":{\"comma\":{\"type\":\"simple\",\"pattern\":[\",\",\" \",\"'\",\"\\\"\",\";\",\"=\",\"(\",\")\",\"[\",\"]\",\"{\",\"}\",\"?\",\"@\",\"&\",\"<\",\">\",\"/\",\":\",\"\\n\",\"\\t\",\"\\r\"],\"lowercase\":false}}}},\"mappings\":{\"properties\":{\"ct__file_path__\":{\"type\":\"keyword\"},\"ct__code_type__\":{\"type\":\"keyword\"},\"ct__date__\":{\"type\":\"date\"},\"name\":{\"type\":\"keyword\"},\"description\":{\"type\":\"keyword\"},\"keyword\":{\"type\":\"keyword\"}}}}"
             response_data = requests.put(url, data=request_body, headers=request_headers, timeout=30, auth=(self.user_name, self.password))
             if response_data.status_code != 200: raise Exception("init elasticsearch add ct_template fail, code:%s exception:%s" % (response_data.status_code, str(response_data.content)))
             loginfo.info("init elasticsearch add ct_template success")

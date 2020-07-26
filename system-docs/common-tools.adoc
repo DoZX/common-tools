@@ -34,12 +34,25 @@
 │  │  ├─ elasticsearch
 │  │  ├─ kibana
 │  │  └─ polling-daemon         // 服务守护程序
+│  ├─ system-ct-parser      // 解析器源码目录
+│  │  ├─ Java                   // Java 工具代码文件目录，下层目录按代码功能领域划分
+│  │  │  ├─ src                     // 解析器源码
+│  │  │  └─ package                 // 执行入口
+│  │  ├─ JavaScript             // JavaScript ...
+│  │  │  ├─ src                     // 解析器源码
+│  │  │  └─ package                 // 执行入口
+│  │  ├─ Python                 // Python ...
+│  │  │  ├─ src                     // 解析器源码
+│  │  │  └─ package                 // 执行入口
+│  │  ├─ Shell                  // Shell ...
+│  │  │  ├─ src                     // 解析器源码
+│  │  └─ └─ package                 // 执行入口
 │  ├─ system-docs
 │  │  ├─ example            // 准入规范示例
 │  │  ├─ common-tools.adoc      // 设计文档
 │  │  └─ description-rules.adoc // 描述文件书写规则
 │  ├─ .gitignore
-│  └─ README.md
+└─ └─ README.md
 ----
 
 === polling-daemon
@@ -57,7 +70,7 @@
 ==== 维护Elasticsearch中的数据(maintenance-data)
 . 更新本地代码，获取最后一次提交的commit id，对比原有的commit id是否有变化，commit id不一致则进行以下步骤(周期执行或者GitHub内置通知)
 . 检查配置ES templates
-. 创建ES索引(索引名规则common-tools.yyyyMMddHHmm)
+. 创建ES索引(索引名规则ct.yyyyMMdd_HHmm)
 . 对仓库进行全量解析( `/code-repositories` 目录下所有文件)
 . 组装格式化数据并push到Elasticsearch新建的索引中
 . 设置新建的ES索引只读
