@@ -16,6 +16,7 @@ loginfo, logerror = logUtil.pub_logger()
 RET_OK = True
 RET_ERR = False
 DESCRIPTION_FILE_NAME = 'description.yml'
+IGNORE_FILE_NAME = '.gitignore'
 
 def doBash(cmd):
     ret = RET_OK
@@ -87,6 +88,7 @@ class ResourceParser:
         for type_file in os.listdir(self.resource_path):
             ct_code_type = type_file
             for module_file in os.listdir(os.path.join(self.resource_path, type_file)):
+                if module_file == IGNORE_FILE_NAME: continue
                 module_file_path = os.path.join(self.resource_path, type_file, module_file)
                 module_files = os.listdir(module_file_path)
                 if DESCRIPTION_FILE_NAME in module_files:
@@ -96,6 +98,7 @@ class ResourceParser:
                     description_dict['ct__code_type__'] = ct_code_type
                     description_dict['ct__date__'] = self.get_last_update_time(description_file_path)
                     for code_file_l1 in module_files:
+                        if code_file_l1 == DESCRIPTION_FILE_NAME: continue
                         code_file_path_l1 = os.path.join(module_file_path, code_file_l1)
                         code_file_list = []
                         if os.path.isdir(code_file_path_l1):
@@ -114,7 +117,7 @@ class ResourceParser:
         return root_path.replace(self.resource_path, 'https://github.com/DoZX/common-tools/blob/master/code-repositories')
 
     def get_last_update_time(self, file_path):
-        return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(os.stat(file_path).st_mtime))
+        return time.strftime('%Y-%m-%dT%H:%M:%S', time.localtime(os.stat(file_path).st_mtime))
 
     def get_file_path_list(self, path, file_path_list):  #传入存储的list
         for file in os.listdir(path):
