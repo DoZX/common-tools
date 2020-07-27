@@ -105,9 +105,9 @@ class ResourceParser:
                             self.get_file_path_list(code_file_path_l1, code_file_list)
                         if len(code_file_list) > 0:
                             for code_file_path_ln in code_file_list:
-                                description_dict['ct__code_' + code_file_path_ln.replace(code_file_l1, '')] = self.read_resource(code_file_path_l1)
+                                description_dict['ct__code__' + code_file_path_ln.replace(module_file_path, '')] = self.read_resource(code_file_path_ln)
                         else:
-                            description_dict['ct__code_' + code_file_l1] = self.read_resource(code_file_path_l1)
+                            description_dict['ct__code__/' + code_file_l1] = self.read_resource(code_file_path_l1)
                     self.db_server_instance.push(json.dumps(description_dict))
                 else:
                     loginfo.info("maintenance-data parser path %s %s does not exist" %(module_file_path, DESCRIPTION_FILE_NAME))
