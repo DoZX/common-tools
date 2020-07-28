@@ -57,11 +57,11 @@ def main():
 
 if __name__ == '__main__':
     try:
-        loginfo.info("start maintenance-data....")
         if os.path.exists(RUN_COCK_FILE_PATH):
-            log.info("Skip Main due to exsiting running copys")
+            loginfo.info("maintenance-data runing....")
         else:
             os.mknod(RUN_COCK_FILE_PATH)
+            loginfo.info("maintenance-data start....")
             main()
     except Exception as e:
         msg = traceback.format_exc()
@@ -70,4 +70,4 @@ if __name__ == '__main__':
     finally:
         if os.path.exists(RUN_COCK_FILE_PATH):
             os.remove(RUN_COCK_FILE_PATH)
-        loginfo.info("maintenance-data end")
+        loginfo.info("maintenance-data end....")
