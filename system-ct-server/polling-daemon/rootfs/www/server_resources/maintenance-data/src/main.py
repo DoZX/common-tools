@@ -59,6 +59,7 @@ if __name__ == '__main__':
     try:
         if os.path.exists(RUN_COCK_FILE_PATH):
             loginfo.info("maintenance-data runing....")
+            os._exit(0)
         else:
             os.mknod(RUN_COCK_FILE_PATH)
             loginfo.info("maintenance-data start....")
