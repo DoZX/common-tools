@@ -4,6 +4,7 @@ import os
 import sys
 from md_base import *
 
+RUN_COCK_FILE_PATH = '../conf/run.lock'
 MAINTENANCE_DATA_CONF_PATH = '../conf/maintenance-data.ini'
 INI_SECTION_CT_TENGINE_SERVER = 'CT_TENGINE_SERVER_CONF'
 INI_SECTION_GIT_KEY_TENGINE_SERVER_HOST = 'tengine_server_host'
@@ -57,8 +58,16 @@ def main():
 if __name__ == '__main__':
     try:
         loginfo.info("start maintenance-data....")
-        main()
+        if os.path.exists(RUN_COCK_FILE_PATH):
+            log.info("Skip Main due to exsiting running copys")
+        else:
+            os.mknod(RUN_COCK_FILE_PATH)
+            main()
     except Exception as e:
         msg = traceback.format_exc()
         logerror.info("maintenance-data do fail, exception:%s" % str(msg))
         raise Exception("maintenance-data do fail, exception:%s" % str(msg))
+    finally:
+        if os.path.exists(RUN_COCK_FILE_PATH):
+            os.remove(RUN_COCK_FILE_PATH)
+        loginfo.info("maintenance-data end")
