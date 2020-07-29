@@ -9,14 +9,15 @@
 - Python 基于Python 2.x
 
 ## 准入规范
-- 代码文件不可带有业务逻辑，文件须仅属于tools code；除非必须，则使用伪代码
-- 代码目录根据代码功能领域划分
-- 每个代码目录必须存在 `description.yml`(描述文件)；书写规则见 [description-rules.adoc](system-docs/description-rules.adoc)
+- `code-repositories`代码目录文件不可带有业务逻辑，文件须仅属于tools code；除非必须，则使用伪代码
+- `code-repositories`代码目录根据代码功能领域划分
+- 功能领域划分根目录必须存在 `description.yml`(描述文件)；书写规则见 [description-rules.adoc](system-docs/description-rules.adoc)
 - 代码内置属性应带有注释, 包括但不限于属性, 类, 方法
 - commit msg 应针对一个文件或一个模块的多个文件
 - commit msg 应尽可能的涵盖所有改动描述
 
 ## 设计文档
+文档包含了 `common-tools`实现的内容及设计  
 [common-tools.adoc](system-docs/common-tools.adoc)
 
 ## Example
