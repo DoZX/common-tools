@@ -16,6 +16,9 @@
 - commit msg 应针对一个文件或一个模块的多个文件
 - commit msg 应尽可能的涵盖所有改动描述
 
+## 设计文档
+[common-tools.adoc](system-docs/common-tools.adoc)
+
 ## Example
 文档包含了一个示例，可以参考示例中的代码提交流程以快速上手。
 - [Java Example](system-docs/example/java_example.md)
