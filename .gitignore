@@ -1,0 +1,13 @@
+# Compiled class file
+*.class
+*.classpath
+*.factorypath
+
+# IDE Files #
+*.iml
+.idea
+.idea/
+.project
+.settings
+target
+.DS_Store
