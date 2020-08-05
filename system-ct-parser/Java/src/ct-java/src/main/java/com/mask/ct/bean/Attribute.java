@@ -8,6 +8,9 @@ import java.io.Serializable;
  * @date 2020.08.04
  */
 public class Attribute implements Serializable {
+
+    private static final long serialVersionUID = -6849794470754667710L;
+
     private String name;
 
     private String description;

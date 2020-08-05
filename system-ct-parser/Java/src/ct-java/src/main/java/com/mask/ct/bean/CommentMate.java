@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public class CommentMate implements Serializable {
 
+    private static final long serialVersionUID = -6849794470754667710L;
+
     private String name;
 
     private String description;
