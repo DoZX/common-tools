@@ -4,4 +4,20 @@
 . 基于配置文件解析出的文件描述信息将提供搜索使用
 . 描述文件应分为包括但不限于 文件名，文件描述，搜索关键字，文件属性信息
 
+== 例子
+```
+name: 功能模块名称
+description: 对功能模块对解释
+keyword: 关键字(方便查询，多个中间建议用空格隔开)
+classs:
+  - name: 类名
+    attributes:
+      - name: 属性名
+        description: 属性名解释
+    methods:
+      - name: 方法名
+        description: 方法名解释
+
+```
+
 
