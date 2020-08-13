@@ -5,8 +5,10 @@ _M = {}
 
 --- common
 _M.CHECK_SHARED_TIMEOUT = 0
+_M.CT_SERVER_SHARED_CONF_KEY = "conf__"
 _M.CT_SERVER_CONF = "/www/tengine-server/conf/tengine-server.ini"
 _M.INI_CT_SERVER_CONF_SECTION = "CT_SERVER_CONF"
+_M.INI_TOKEN = "token"
 _M.INI_ES_NODE_IPS = "es_node_ips"
 _M.INI_KIBANA_NODE_IPS = "kibana_node_ips"
 _M.INI_PD_TENGINE_NODE_IP = "pd_tengine_node_ip"
