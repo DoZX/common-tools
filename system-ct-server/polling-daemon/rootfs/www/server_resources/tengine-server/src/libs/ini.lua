@@ -1,9 +1,6 @@
-module("libs.ini", package.seeall)
+_M = {}
 
---[[
-    载入一个INI文件
---]]
-function load(filename)
+function _M.load(filename)
     local data = {}
     local session = nil -- 当前结点，为空则不会读取
     local file = io.open(filename, "r")
@@ -31,10 +28,8 @@ function load(filename)
     file:close()
     return data
 end
---[[
-    保存一个INI文件
---]]
-function save(data, filename)
+
+function _M.save(data, filename)
     local file = io.open(filename, "w")
     for session, group in pairs(data) do
         file:write("["..session.."]\n")
@@ -44,10 +39,8 @@ function save(data, filename)
     end
     file:close()
 end
---[[
-    打印INI文件
---]]
-function print(data)
+
+function _M.print(data)
     for session, group in pairs(data) do
         print(session)
         for key, value in pairs(group) do
@@ -55,22 +48,20 @@ function print(data)
         end
     end
 end
---[[
-    获取一个值
---]]
-function get(data, session, key, default)
+
+function _M.get(data, session, key, default)
     if data[session] then
         return data[session][key] or default
     else
         return default
     end
 end
---[[
-    添加一个值
---]]
-function set(data, session, key, value)
+
+function _M.set(data, session, key, value)
     if data[session] == nil then
         data[session] = {}
     end
     data[session][key] = value
 end
+
+return _M
