@@ -19,7 +19,7 @@ local function get_conf(key)
     if string.len(shared_data) == 0 then
         status = conf.RESPONCE_CODE_INVALID_PARAM
         msg = "get [" .. key ..  "] conf is nil, Please try again later."
-        shared_data = {}
+        shared_data = "{}"
     end
     local data = '{"status":' .. status .. ', "msg":"' .. msg .. '", "data":' .. shared_data .. '}'
     do_response(conf.LOG_INFO, data)
