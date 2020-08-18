@@ -4,10 +4,10 @@ path.logs: /usr/share/elasticsearch/logs
 network.host: 0.0.0.0
 http.port: 9200
 
-node.name: d-node1
+node.name: ct-node-1
 discovery.zen.minimum_master_nodes: 1
-cluster.initial_master_nodes: ["d-node1"]
-# discovery.seed_hosts: ["1.1.1.1:9600", "2.2.2.2:9600", "3.3.3.3:9600"]
+cluster.initial_master_nodes: ["ct-node-1"]
+# discovery.seed_hosts: ["1.1.1.1:9300", "2.2.2.2:9300", "3.3.3.3:9300"]
 
 opendistro_security.ssl.transport.pemcert_filepath: cert/node.pem
 opendistro_security.ssl.transport.pemkey_filepath: cert/node-key.pem

@@ -60,8 +60,9 @@ make_install_tengine() {
                 --add-module=$TENGINE_PACKAGE_PATH/lua-nginx-module-0.10.2/ \
                 --with-ld-opt=-Wl,-rpath,$LUA_INSTALL_PATH/lib && \
     make && make install
-    mv -f /www/tengine-server/conf/nginx.conf $TENGINE_INSTALL_PATH/conf/nginx.conf && \
-    mv -f /www/tengine-server/conf/conf.d $TENGINE_INSTALL_PATH/conf/
+    mv -f /www/tengine-server/conf/nginx/nginx.conf $TENGINE_INSTALL_PATH/conf/nginx.conf && \
+    mv -f /www/tengine-server/conf/nginx/conf.d $TENGINE_INSTALL_PATH/conf/ && \
+    rm -rf /www/tengine-server/conf/nginx
 }
 
 install_python_packages() {
