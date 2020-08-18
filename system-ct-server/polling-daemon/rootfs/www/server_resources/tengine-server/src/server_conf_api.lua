@@ -29,7 +29,7 @@ local function get_es_conf(es_ip_list, token)
     es_start_node_name = "ct-node-"
     es_initial_master_nodes = {}
     es_seed_hosts = {}
-    for num, es_ip in ipairs(es_ip_list) do
+    for num, es_ip in pairs(es_ip_list) do
         es_initial_master_nodes[num] = es_start_node_name .. num
         es_seed_hosts[num] = es_ip .. ":" .. es_tcp_port
 
@@ -52,10 +52,10 @@ local function get_kibana_conf(kibana_ip_list, es_ip_list, token)
     kibana_server_name = "ct-kibana"
     es_http_port = 9200
     elasticsearch_hosts = {}
-    for num, es_ip in ipairs(es_ip_list) do
-        elasticsearch_hosts = es_ip .. ":" .. es_http_port
+    for num, es_ip in pairs(es_ip_list) do
+        elasticsearch_hosts[num] = es_ip .. ":" .. es_http_port
     end
-    for num, kibana_ip in ipairs(kibana_ip_list) do
+    for num, kibana_ip in pairs(kibana_ip_list) do
         local kibana_conf = {}
         kibana_conf["server_name"] = kibana_server_name
         kibana_conf["elasticsearch_hosts"] = elasticsearch_hosts
@@ -88,15 +88,15 @@ local function reload_conf()
     -- es
     local es_node_ips = iniUtil.get(iniconf, conf.INI_CT_SERVER_CONF_SECTION, conf.INI_ES_NODE_IPS, "127.0.0.1")
     local es_ip_list = split(es_node_ips, ",")
-    local es_conf_table = get_es_conf(es_ip_list)
-    for es_ip, es_conf in ipairs(es_conf_table, token) do
+    local es_conf_table = get_es_conf(es_ip_list, token)
+    for es_ip, es_conf in pairs(es_conf_table) do
         shared_conf:set(conf.CT_SERVER_SHARED_CONF_KEY .. es_ip, dkjson.encode(es_conf), conf.CHECK_SHARED_TIMEOUT, os.time() + 1)
     end
     -- kibana
     local kibana_node_ips = iniUtil.get(iniconf, conf.INI_CT_SERVER_CONF_SECTION, conf.INI_KIBANA_NODE_IPS, "127.0.0.1")
     local kibana_ip_list = split(kibana_node_ips, ",")
     local kibana_conf_table = get_kibana_conf(kibana_ip_list, es_ip_list, token)
-    for kibana_ip, kibana_conf in ipairs(kibana_conf_table) do
+    for kibana_ip, kibana_conf in pairs(kibana_conf_table) do
         shared_conf:set(conf.CT_SERVER_SHARED_CONF_KEY .. kibana_ip, dkjson.encode(kibana_conf), conf.CHECK_SHARED_TIMEOUT, os.time() + 1)
     end
     local conf_data = dkjson.encode(iniconf)
