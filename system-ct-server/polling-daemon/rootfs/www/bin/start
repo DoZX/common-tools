@@ -15,10 +15,10 @@ init() {
 }
 
 startup() {
-    echo "startup tengine...."
-    /www/tengine-server/server/sbin/nginx
-    # echo "startup polling-daemon...."
-    # /www/bin/start_polling-daemon.sh
+    # echo "startup tengine...."
+    # /www/tengine-server/server/sbin/nginx
+    echo "startup polling-daemon...."
+    /www/bin/start_polling-daemon.sh
 }
 
 daemon() {
