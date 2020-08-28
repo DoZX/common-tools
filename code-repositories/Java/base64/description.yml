@@ -1,0 +1,10 @@
+name: Base64 转码/解码工具类
+description: Base64 转码/解码工具类
+keyword: Base64 转码 解码 加密 单向加密
+classs:
+  - name: Base64Util
+    methods:
+      - name: getEncryptionStr
+        description: 转码
+      - name: getDecryptStr
+        description: 解码
