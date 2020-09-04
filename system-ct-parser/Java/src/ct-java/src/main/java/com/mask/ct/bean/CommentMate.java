@@ -1,5 +1,6 @@
 package com.mask.ct.bean;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,16 +14,15 @@ public class CommentMate implements Serializable {
 
     private static final long serialVersionUID = -5809782578272943999L;
 
-    private String name;
+    private String name = "Here, you can write module name!";
 
-    private String description;
+    private String description = "Here, you can write some description about the module!";
 
-    private String keyword;
+    private String keyword = "Here, you write keyword. eg. MD5 util. Multiple keyword use space separator!";
 
     private List<ClassInfo> classs = new ArrayList<>();
 
     public CommentMate() {
-
     }
 
     public String getName() {

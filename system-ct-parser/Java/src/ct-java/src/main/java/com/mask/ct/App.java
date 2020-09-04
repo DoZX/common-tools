@@ -31,7 +31,7 @@ public class App {
         CommandLine commandLine = CommondUtil.parseCmdLine("ct-java", args, options, new DefaultParser());
         checkOption(commandLine);
 
-        CustomerDoclet.startParse(commandLine.getOptionValue("input"), commandLine.getOptionValue("output"));
+        CustomerDoclet.startParse(commandLine.getOptionValue("input"));
     }
 
     private static void checkOption(CommandLine commandLine) throws Exception {
@@ -40,14 +40,10 @@ public class App {
         }
 
         String input = commandLine.getOptionValue("input");
-        String output = commandLine.getOptionValue("output");
         if (StringUtils.isEmpty(input)) {
             throw new Exception("input is requeired");
         }
 
-        if (StringUtils.isEmpty(output)) {
-            throw new Exception("output is requeired");
-        }
 
         String[] modules = input.split(";");
         for (String module : modules){
@@ -55,17 +51,6 @@ public class App {
             if (!file.exists() || !file.canRead()) {
                 throw new FileNotFoundException("input file not exists");
             }
-        }
-
-
-        try {
-            File outFile = new File(output);
-            // TODO need deal later.
-            /*if (!file.canWrite()) {
-                throw new FileNotFoundException("output file can't write");
-            }*/
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
         }
     }
 

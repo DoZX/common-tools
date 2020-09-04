@@ -31,8 +31,6 @@ public class CustomerDoclet extends Doclet {
 
     public static boolean start(RootDoc rootDoc) {
         ClassDoc[] classes = rootDoc.classes();
-        commentMate.setName("");
-        commentMate.setDescription("");
         for (ClassDoc classDoc : classes) {
             // parse class comment
             parseClassDoc(commentMate, classDoc);
@@ -103,12 +101,12 @@ public class CustomerDoclet extends Doclet {
     }
 
 
-    public static void startParse(String input, String output) {
+    public static void startParse(String input) {
         CustomerDoclet.sourcePath = input;
         String[] modules = sourcePath.split(";");
 
         for (String module : modules){
-            CustomerDoclet.output = new YamlOutput(module + File.separator +output);
+            CustomerDoclet.output = new YamlOutput(module + File.separator + "description.yml");
 
             // scan java source file.
             scanSourceFiles(module);

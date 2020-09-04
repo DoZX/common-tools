@@ -13,7 +13,7 @@ public class CommondUtil {
         Options options = new Options();
         options.addOption("h","help", false, "Print help");
         options.addOption("input","sourcePath", true, "source path");
-        options.addOption("output","outputPath", true, "output path");
+        // options.addOption("output","outputPath", true, "output path");
         return options;
     }
 
