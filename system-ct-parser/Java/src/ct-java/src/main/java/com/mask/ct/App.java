@@ -29,6 +29,9 @@ public class App {
         Options options = CommondUtil.buildCommandLineOptions();
 
         CommandLine commandLine = CommondUtil.parseCmdLine("ct-java", args, options, new DefaultParser());
+        if (commandLine == null){
+            return;
+        }
         checkOption(commandLine);
 
         CustomerDoclet.startParse(commandLine.getOptionValue("input"));

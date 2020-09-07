@@ -12,7 +12,7 @@ public class CommondUtil {
     public static Options buildCommandLineOptions(){
         Options options = new Options();
         options.addOption("h","help", false, "Print help");
-        options.addOption("input","sourcePath", true, "source path");
+        options.addOption("input","sourcePath", true, "Source path, multiple module use \";\" separator. eg. -input \"c:/test/a;c:/test/b\" ");
         // options.addOption("output","outputPath", true, "output path");
         return options;
     }
