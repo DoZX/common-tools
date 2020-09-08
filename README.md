@@ -29,5 +29,3 @@
 
 ## 社群
 钉钉群: 31883571
-
-![image](https://ct-01.oss-cn-beijing.aliyuncs.com/comm-dingding.JPG?x-oss-process=image/resize,l_320)
