@@ -6,7 +6,7 @@ IMAGE_TAG=1.0
 
 run() {
 	name=$1
-	sudo docker run -itd -p 8001:8001 -v /etc/localtime:/etc/localtime --name=${IMAGE_NAME}-${name} ${IMAGE_NAME}:${IMAGE_TAG} /bin/bash
+	sudo docker run -itd -p 8001:8001 --network host -v /etc/localtime:/etc/localtime --name=${IMAGE_NAME}-${name} ${IMAGE_NAME}:${IMAGE_TAG} /bin/bash
 }
 
 del() {
