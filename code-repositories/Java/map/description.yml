@@ -1,0 +1,10 @@
+name: 地图工具类
+description: 地图 经纬度 距离
+keyword: 地图 经纬度 距离
+classs:
+  - name: MapUtil
+    methods:
+      - name: getDist
+        description: 通过经纬度获取距离(单位：米) 基于百度地图经纬度
+      - name: getDistHaversineRAD
+        description: Haversine公式计算距离
