@@ -1,0 +1,13 @@
+name: 根据日期计算星座
+description: 计算星座
+keyword: 星座
+classs:
+  - name: ConstellationUtil
+    attributes:
+      - name: dayArr
+        description: 日期
+      - name: constellationArr
+        description: 星座集合
+    methods:
+      - name: getConstellation
+        description: 生日计算星座

@@ -1,0 +1,31 @@
+name: 自定义缓存
+description: 缓存
+keyword: 缓存
+classs:
+  - name: SystemCache
+    attributes:
+      - name: dataSourceSize
+        description: 最大容量
+      - name: dataSourceLevel
+        description: 临界值
+      - name: dataSourceCPIndex
+        description: CP起始的下标(第75个用户)
+    methods:
+      - name: put
+        description: 存入缓存
+      - name: get
+        description: 获取缓存
+      - name: cpDataSource
+        description: Map 对象CP
+  - name: DataSource
+    attributes:
+      - name: guideLinkKey
+        description: KEY 链指针
+      - name: linkKeys
+        description: KEY 链
+      - name: guideDataSource
+        description: true:E0 空间;  false:E1 空间
+      - name: dataSourceE0
+        description: 内存E0
+      - name: dataSourceE1
+        description: 内存E1
