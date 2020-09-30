@@ -19,6 +19,8 @@ startup() {
         ps -ef |grep '/usr/share/kibana/kibana.log' |grep -v grep |cut -c 9-15 |xargs kill -9
     fi
     echo "startup...."
+    # 限制kibana内存
+    echo 'NODE_OPTIONS="$NODE_OPTIONS --max-old-space-size=400"' >> /usr/share/kibana/bin/kibana
     /usr/share/kibana/bin/kibana -l /usr/share/kibana/logs/ct-kibana.log &
 }
 
