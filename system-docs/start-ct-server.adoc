@@ -1,4 +1,4 @@
-# 让 _common-tools_ 项目跑起来
+# 让项目跑起来
 
 ## 准备
 - linux 系统（自行安装Git Docker）
@@ -41,19 +41,19 @@ Successfully tagged ct-polling-daemon:1.0
 ```
 
 ## 启动服务
-1. 启动elasticsearch
+1 启动elasticsearch
 ```
 cd /server/common-tools/system-ct-server/elasticsearch/ && ./docker-run.sh
 ```
 验证是否启动成功 `curl -u admin:admin 127.0.0.1:9200` 
 
-2. 启动kibana
+2 启动kibana
 ```
 cd /server/common-tools/system-ct-server/kibana/ && ./docker-run.sh
 ```
 验证是否启动成功 `curl -v 127.0.0.1:5601` 
 
-3. 启动polling-daemon
+3 启动polling-daemon
 ```
 cd /server/common-tools/system-ct-server/polling-daemon/ && ./docker-run.sh
 ```
