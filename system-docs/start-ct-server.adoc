@@ -1,0 +1,62 @@
+# 让项目跑起来
+
+## 准备
+- linux 系统（不是linux系统在启动服务的时候需要自行适配docker-run.sh脚本）
+- 安装Git Docker
+- clone 项目代码到本地（我这里clone到 `/server` 文件夹）
+```
+[root@iZp38r2punq3k3Z server]# git clone https://github.com/DoZX/common-tools.git
+正克隆到 'common-tools'...
+....省略....
+处理 delta 中: 100% (309/309), done.
+```
+
+## 编译服务
+- 编译elasticsearch
+```
+[root@iZp38r2punq3k3Z server]# cd /server/common-tools/system-ct-server/elasticsearch/ && ./docker-build.sh
+Sending build context to Docker daemon  46.59kB
+Step 1/4 : FROM amazon/opendistro-for-elasticsearch:1.8.0
+....省略....
+Successfully built 4b8366507e67
+Successfully tagged ct-elasticsearch:1.0
+```
+- 编译kibana
+```
+[root@iZp38r2punq3k3Z server]# cd /server/common-tools/system-ct-server/kibana/ && ./docker-build.sh
+Sending build context to Docker daemon  11.26kB
+Step 1/4 : FROM amazon/opendistro-for-elasticsearch-kibana:1.8.0
+....省略....
+Successfully built 08a45df26eb7
+Successfully tagged ct-kibana:1.0
+```
+- 编译polling-daemon
+此处需要需要注意：如果polling-daemon容器不能通过127.0.0.1:9200访问elasticsearch服务，需要修改 `/server/common-tools/system-ct-server/polling-daemon/rootfs/www/server_resources/maintenance-data/conf/maintenance-data.ini` 文件的 `CT_ES_SERVER_CONF.db_server_host` 配置，将127.0.0.1:9200修改为可访问地址即可。
+```
+[root@iZp38r2punq3k3Z server]# cd /server/common-tools/system-ct-server/polling-daemon/ && ./docker-build.sh
+Sending build context to Docker daemon   8.13MB
+Step 1/5 : FROM centos:7
+....省略....
+Successfully built e372663b76dc
+Successfully tagged ct-polling-daemon:1.0
+```
+
+## 启动服务
+1 启动elasticsearch
+```
+cd /server/common-tools/system-ct-server/elasticsearch/ && ./docker-run.sh
+```
+验证是否启动成功 `curl -u admin:admin 127.0.0.1:9200` 
+
+2 启动kibana
+```
+cd /server/common-tools/system-ct-server/kibana/ && ./docker-run.sh
+```
+验证是否启动成功 `curl -v 127.0.0.1:5601` 
+
+3 启动polling-daemon
+```
+cd /server/common-tools/system-ct-server/polling-daemon/ && ./docker-run.sh
+```
+查看日志判断是否启动成功 `docker exec -it ct-polling-daemon-test-01 tail -10f /www/maintenance-data/logs/log.info` 
+
