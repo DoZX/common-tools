@@ -1,4 +1,4 @@
-=== 准备环境
+=== 环境准备
 * linux 系统（不是linux系统在启动服务的时候需要自行适配docker-run.sh脚本）
 * 安装Git Docker
 * clone 项目代码到本地（我这里clone到 `/server` 文件夹）
