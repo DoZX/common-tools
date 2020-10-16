@@ -27,9 +27,8 @@
 ├─ common-tools
 │  ├─ code-repositories     // 工具代码文件，下层结构按语言划分
 │  │  ├─ Java                   // Java 工具代码文件目录，下层目录按代码功能领域划分
-│  │  ├─ JavaScript             // JavaScript ...
-│  │  ├─ Python                 // Python ...
-│  │  └─ Shell                  // Shell ...
+│  │  ├─ Python                 // Python
+│  │  └─ CodeDoc                // 服务配置或文档，包含多种格式
 │  ├─ system-ct-server      // 服务源码目录
 │  │  ├─ elasticsearch
 │  │  ├─ kibana
@@ -38,17 +37,15 @@
 │  │  ├─ Java                   // Java 工具代码文件目录，下层目录按代码功能领域划分
 │  │  │  ├─ src                     // 解析器源码
 │  │  │  └─ package                 // 执行入口
-│  │  ├─ JavaScript             // JavaScript ...
-│  │  │  ├─ src                     // 解析器源码
-│  │  │  └─ package                 // 执行入口
 │  │  ├─ Python                 // Python ...
 │  │  │  ├─ src                     // 解析器源码
 │  │  │  └─ package                 // 执行入口
-│  │  ├─ Shell                  // Shell ...
+│  │  ├─ CodeDoc                // CodeDoc ...
 │  │  │  ├─ src                     // 解析器源码
 │  │  └─ └─ package                 // 执行入口
 │  ├─ system-docs
 │  │  ├─ example            // 准入规范示例
+│  │  ├─ start-ct-server.adoc   // 项目部署文档
 │  │  ├─ common-tools.adoc      // 设计文档
 │  │  └─ description-rules.adoc // 描述文件书写规则
 │  ├─ .gitignore

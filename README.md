@@ -1,6 +1,6 @@
 # common-tools
 > 开发常用工具类, 为减少重复造轮子而努力!<br />
-> 包含的语言：Java, Python, Shell, JavaScript
+> 包含的语言：Java, Python, CodeDoc
 
 ## 开发模式
 - 受保护的分支: master, release_*
@@ -25,5 +25,4 @@
 - [start ct-server](system-docs/start-ct-server.adoc)
 - [Java Example](system-docs/example/java_example.md)
 - [Python Example](system-docs/example/python_example.md)
-- [Shell Example](system-docs/example/shell_example.md)
-- [JavaScript Example](system-docs/example/javascript_example.md)
+- [CodeDoc Example](system-docs/example/codedoc_example.md)
