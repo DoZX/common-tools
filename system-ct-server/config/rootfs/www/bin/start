@@ -5,7 +5,7 @@ source /www/bin/log_util.sh
 init() {
     if [ -d "/www/server_resources" ]; then
         echo "init..."
-        cp -rf /www/server_resources/maintenance-data /www/
+        cp -rf /www/server_resources/tengine-server /www/
         cp -rf /www/server_resources/cron /var/spool/
 
         /www/bin/install.sh
@@ -14,8 +14,8 @@ init() {
 }
 
 startup() {
-    echo "startup polling-daemon...."
-    /www/bin/start_polling-daemon.sh
+    echo "startup tengine...."
+    /www/tengine-server/server/sbin/nginx
 }
 
 daemon() {

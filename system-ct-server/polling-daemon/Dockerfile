@@ -4,7 +4,6 @@ LABEL maintainer="dhh"
 COPY rootfs /
 
 RUN yum -y install epel-release && \
-    yum -y install wget python-pip git crontabs \
-        make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel
+    yum -y install wget python-pip git crontabs
 
 ENTRYPOINT /www/bin/start
