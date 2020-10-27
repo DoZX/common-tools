@@ -1,0 +1,62 @@
+name: 日期工具类
+description: java8日期工具
+keyword: 日期工具 字符串转时间 时间差
+classs:
+  - name: DateUtil
+    methods:
+      - name: stampToDate
+        description: 把长整型的时间戳转换成日期
+      - name: strToStamp
+        description: 将字符串转换成时间戳
+      - name: strToDate
+        description: 将字符串日期转换成Date
+      - name: isToday
+        description: 判断是否是当天
+      - name: dateToLocalDate
+        description: 把Date类型的日志转换成LocalDate类型的日期
+      - name: dateToLocalDateTime
+        description: 把Date类型的日志转换成LocalDateTime类型的日期
+      - name: localDateToDate
+        description: 把LocalDate类型的日志转换成Date类型的日期
+      - name: localDateTimeToDate
+        description: 把LocalDateTime类型的日志转换成Date类型的日期
+      - name: getBeforeOrAfterNumDay
+        description: 获取给定日期之前或者之后的日期
+      - name: getBeforeOrAfterNumMonth
+        description: 获取给定日期之前或者之后的月份
+      - name: addDate
+        description: 给当前时间增加日期返回增加日期之后的时间
+      - name: getDayOfWeek
+        description: 获取当天是星期几
+      - name: getDayOfWeekWithChinese
+        description: 获取当天是星期几
+      - name: getDayOfWeek
+        description: 获取传递的日期在当天是星期几
+      - name: getDayOfWeekWithChinese
+        description: 获取传递的日期在当天是星期几
+      - name: belongDateRange
+        description: 判断给定的日期是否在给定的日期范围内
+      - name: getNowHour
+        description: 获取当前的小时（24小时制）
+      - name: getAgeByBirthday
+        description: 根据指定日期获取年龄
+      - name: getWeekOfYear
+        description: 根据传入的时间获取这个时间是第几周
+      - name: getPreviousBeginHourAndEndHour
+        description: 获取给定时间的上个小时的开始时间和结束时间
+      - name: getPreviousBeginDayAndEndDay
+        description: 获取上周的开始日期和结束日期
+      - name: getPreviousBeginDayAndEndDay
+        description: 根据给定的时间获取上周的开始日期和结束日期
+      - name: getDatesBetweenStartDateAndEndDate
+        description: 根据传入的开始日期和结束日期获取两者之间的日期集合，格式为 “yyyy-MM-dd”
+      - name: getDatesBetweenStartDateAndEndDate
+        description: 根据传入的开始日期和结束日期获取两者之间的日期集合
+      - name: getLastDayOfMonth
+        description: 获取给定日期的月份的最后一天
+      - name: getFormatBySeconds
+        description: 根据传入的秒数获取格式化之后的时间
+      - name: getTimeDifference
+        description: 计算给定两个日期之前的时间差
+      - name: getRangeOfDates
+        description: 获取给定时间的日期集合，包含开始时间和结束时间
