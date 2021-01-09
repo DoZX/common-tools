@@ -82,6 +82,27 @@ public class DateUtils {
         return dateToString(date, DateType.NORM_DATETIME_MINUTE_PATTERN);
     }
 
+    /**
+     * 获取当前年份和月份，按照指定的分隔符拼接 2021-03
+     *
+     * @param separator 分隔符
+     * @return 日期字符串
+     */
+    public static String getCurrentYearAndMonth(String separator) {
+        String month = LocalDate.now().getMonth().getValue() > 10 ? "" + LocalDate.now().getMonth().getValue() : "0" + LocalDate.now().getMonth().getValue();
+        return LocalDate.now().getYear() + separator + month;
+    }
+
+    /**
+     * 获取当前年份的一月 按照指定的分隔符拼接：2021-01
+     *
+     * @param separator 分隔符
+     * @return 日期字符串
+     */
+    public static String getCurrentYearWithFirstMonth(String separator) {
+        return LocalDate.now().getYear() + separator + "01";
+    }
+
 
     /**
      * 把当前日期格式化成指定的的字符串日期

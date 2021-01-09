@@ -60,3 +60,7 @@ classs:
         description: 计算给定两个日期之前的时间差
       - name: getRangeOfDates
         description: 获取给定时间的日期集合，包含开始时间和结束时间
+      - name: getCurrentYearAndMonth
+        description: 获取当前年份和月份，按照指定的分隔符拼接
+      - name: getCurrentYearWithFirstMonth
+        description: 获取当前年份的一月 按照指定的分隔符拼接
