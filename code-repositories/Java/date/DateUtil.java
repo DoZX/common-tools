@@ -89,7 +89,7 @@ public class DateUtils {
      * @return 日期字符串
      */
     public static String getCurrentYearAndMonth(String separator) {
-        String month = LocalDate.now().getMonth().getValue() > 10 ? "" + LocalDate.now().getMonth().getValue() : "0" + LocalDate.now().getMonth().getValue();
+        String month = LocalDate.now().getMonth().getValue() < 10 ? "0" + LocalDate.now().getMonth().getValue() : "" + LocalDate.now().getMonth().getValue();
         return LocalDate.now().getYear() + separator + month;
     }
 
