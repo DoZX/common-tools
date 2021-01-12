@@ -103,7 +103,6 @@ public class DateUtils {
         return LocalDate.now().getYear() + separator + "01";
     }
 
-
     /**
      * 把当前日期格式化成指定的的字符串日期
      *
