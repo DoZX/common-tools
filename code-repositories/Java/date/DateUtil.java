@@ -123,6 +123,22 @@ public class DateUtils {
     }
 
     /**
+     * 校验两个 月日 字符串日期的大小
+     * <p>比如 01-02 和 02-03 比较 得到的结果就是 true</p>
+     * <p>比如 01-03 和 02-03 比较 得到的结果就是 true</p>
+     * <p>比如 01-04 和 02-03 比较 得到的结果就是 false</p>
+     *
+     * @param beginDate 开始日期
+     * @param endDate   结束日期
+     * @param split     分隔符
+     * @return 比较结果
+     */
+    public static boolean checkDate(String beginDate, String endDate, String split) {
+        return Integer.parseInt(endDate.replace(split, "")) - Integer.parseInt(beginDate.replace(split, "")) >= 0;
+
+    }
+
+    /**
      * 将字符串日期转换成Date
      *
      * @param dateStr  日期字符串，可以是 20200101、2020-01-01、2020年01月01日等格式
