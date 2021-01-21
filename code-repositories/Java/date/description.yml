@@ -64,3 +64,7 @@ classs:
         description: 获取当前年份和月份，按照指定的分隔符拼接
       - name: getCurrentYearWithFirstMonth
         description: 获取当前年份的一月 按照指定的分隔符拼接
+      - name: checkDate
+        description: 校验两个 月-日 字符串日期的大小
+      - name: getCurrentMonthAndDay
+        description: 按照指定的分隔符获取当前月份和日期
