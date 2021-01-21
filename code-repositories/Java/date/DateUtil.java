@@ -103,6 +103,19 @@ public class DateUtils {
         return LocalDate.now().getYear() + separator + "01";
     }
 
+
+    /**
+     * 按照指定的分隔符获取当前月份和日期
+     * <p>比如 今天是2020年2月2日 分隔符为“-” 则获取的日期为 “02-02”</p>
+     * @param separator 指定的分隔符
+     * @return 字符串日期
+     */
+    public static String getCurrentMonthAndDay(String separator) {
+        String month = LocalDate.now().getMonth().getValue() >= 10 ? "" + LocalDate.now().getMonth().getValue() : "0" + LocalDate.now().getMonth().getValue();
+        String day = LocalDate.now().getDayOfMonth() >= 10 ? "" + LocalDate.now().getDayOfMonth() : "0" + LocalDate.now().getDayOfMonth();
+        return month + separator + day;
+    }
+
     /**
      * 把当前日期格式化成指定的的字符串日期
      *
